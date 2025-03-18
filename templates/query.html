@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookhive - Query</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Query section styles */
+        #query {
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+        }
+
+        /* Toggle switch styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Night mode styles */
+        body.night-mode {
+            background-color: #1e1e1e;
+            color: #cfcfcf;
+        }
+
+        body.night-mode .sidebar {
+            background-color: #1a1a1a;
+        }
+
+        body.night-mode textarea {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+        }
+
+        body.night-mode button {
+            background-color: #444;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Bookhive</div>
+            <nav>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/#search">Search</a></li>
+                    <li><a href="/query">Query</a></li>
+                    <li><a href="/#feedback">Feedback</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main>
+            <header>
+                <h1>Ask a Query</h1>
+                <!-- Night mode toggle switch -->
+                <label class="switch">
+                    <input type="checkbox" id="modeToggle">
+                    <span class="slider"></span>
+                </label>
+            </header>
+            <section id="query">
+                <textarea id="query-input" placeholder="Ask your query here..."></textarea>
+                <button onclick="submitQuery()">Submit</button>
+                <p id="success-message" style="display: none; color: green;">Your query has been submitted successfully. Please wait, our experts are getting to it.</p>
+            </section>
+        </main>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <!-- Firebase Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- Firebase Storage SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkEuLaRmpcFk7SUjshcr4j5I_YeCmi1o4",
+            authDomain: "bookhive-8134e.firebaseapp.com",
+            projectId: "bookhive-8134e",
+            storageBucket: "bookhive-8134e.firebasestorage.app",
+            messagingSenderId: "774988848702",
+            appId: "1:774988848702:web:57fdcdf1bda6198024bb6f",
+            measurementId: "G-TWVM5KBNCY"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Night mode toggle functionality
+        const toggleButton = document.getElementById('modeToggle');
+        toggleButton.addEventListener('change', () => {
+            document.body.classList.toggle('night-mode');
+        });
+
+        let userEmail = '';
+        let userId = '';
+        let userName = '';
+
+        // Check if user is authenticated
+        const auth = firebase.auth();
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                userEmail = user.email;
+                userId = user.uid;
+                userName = user.displayName || "Anonymous";
+            } else {
+                // No user is signed in, redirect to login page
+                window.location.href = "/login";
+            }
+        });
+
+        // Function to submit query
+        async function submitQuery() {
+            const query = document.getElementById('query-input').value;
+            const successMessage = document.getElementById('success-message');
+            if (query) {
+                try {
+                    console.log("Submitting query:", query);
+                    await db.collection("queries").add({
+                        userId: userId,
+                        userEmail: userEmail,
+                        userName: userName,
+                        query: query,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    successMessage.style.display = 'block';
+                    console.log("Query submitted successfully");
+                } catch (error) {
+                    console.error('Error submitting query:', error);
+                    alert('There was an error submitting your query. Please try again later.');
+                }
+            } else {
+                alert('Please enter a query.');
+            }
+        }
+    </script>
+</body>
+</html>

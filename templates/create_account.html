@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <script type="module">
+        // Firebase configuration and setup (unchanged)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkEuLaRmpcFk7SUjshcr4j5I_YeCmi1o4",
+            authDomain: "bookhive-8134e.firebaseapp.com",
+            projectId: "bookhive-8134e",
+            storageBucket: "bookhive-8134e.firebasestorage.app",
+            messagingSenderId: "774988848702",
+            appId: "1:774988848702:web:57fdcdf1bda6198024bb6f",
+            measurementId: "G-TWVM5KBNCY"
+          };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.createAccount = () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const userId = user.uid;  // Get the user ID from Firebase
+                    alert("Account created successfully!");
+                    // Store the user ID in the session
+                    fetch('/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ user_id: userId })
+                    }).then(() => {
+                        window.location.href = "/home";
+                    });
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    alert(`Error: ${errorMessage}`);
+                });
+        };
+    </script>
+    <style>
+        /* General Reset */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Parallax Background */
+        .parallax {
+            background: url('{{ url_for("static", filename="shelf.jpg") }}') no-repeat fixed center;
+            background-size: cover;
+            height: 100%;
+        }
+
+        /* Signup Container */
+        /* Signup Container */
+        .signup-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dark semi-transparent background */
+            color: white;
+            /* Make text white */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .signup-container h2 {
+            text-align: center;
+            color: white;
+            /* Ensure heading text is white */
+            margin-bottom: 30px;
+        }
+
+        .signup-container label {
+            font-size: 16px;
+            color: white;
+            /* Make label text white */
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .signup-container input[type="text"],
+        .signup-container input[type="email"],
+        .signup-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Slightly transparent input background */
+            color: white;
+            /* Input text color white */
+        }
+
+        .signup-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            /* Placeholder text white but slightly transparent */
+        }
+
+        .signup-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-container button:hover {
+            background-color: #45a049;
+        }
+
+        .signup-container .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            /* Login link text color white */
+        }
+
+        .signup-container .login-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .signup-container .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Parallax Background -->
+    <div class="parallax">
+        <!-- Signup Form -->
+        <div class="signup-container">
+            <h2>Create Account</h2>
+            <form action="/register" method="post" onsubmit="event.preventDefault(); createAccount();">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password"
+                    required>
+
+                <button type="submit">Register</button>
+            </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="/login">Login here</a></p>
+                <p>Go to <a href="/home">Home</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookhive</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script type="module" src="static/firebase-init.js" defer></script>
+    <script type="module" src="static/script.js" defer></script>
+    <style>
+        /* Center the content of search results horizontally */
+        #books {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%; /* Ensure it takes the full width */
+            text-align: center; /* Center text within the container */
+        }
+    </style>
+</head>
+<body class="parallax">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Bookhive</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="/query">Query</a></li>
+                <li><a href="/upload-book">Upload Book</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home">
+            <h1>Welcome to Bookhive</h1>
+            <p>Your one-stop destination for all things books.</p>
+        </section>
+        
+        <!-- Search Section -->
+        <section id="search">
+            <h2>Search Books</h2>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for books..." style="background-color: rgba(0, 0, 0, 0.5); color: white;">
+                <button onclick="searchBooks()" style="background-color: #8B4513; color: white;">Search</button>
+            </div>
+    
+            <!-- Genre Filter Dropdown -->
+            <label for="genre-dropdown">Filter by Genre:</label>
+            <select id="genre-dropdown" onchange="filterByGenre()" style="background-color: rgba(0, 0, 0, 0.5); color: white;">
+                <option value="">All Genres</option>
+                <option value="fiction">Fiction</option>
+                <option value="non-fiction">Non-Fiction</option>
+                <option value="mystery">Mystery</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="romance">Romance</option>
+                <option value="science fiction">Science Fiction</option>
+                <option value="thriller">Thriller</option>
+                <option value="horror">Horror</option>
+                <option value="biography">Biography</option>
+                <option value="history">History</option>
+                <option value="poetry">Poetry</option>
+                <option value="self-help">Self-Help</option>
+                <option value="philosophy">Philosophy</option>
+                <option value="religion">Religion</option>
+                <option value="science">Science</option>
+                <option value="travel">Travel</option>
+                <option value="children">Children</option>
+                <option value="young adult">Young Adult</option>
+                <option value="cookbooks">Cookbooks</option>
+                <option value="art">Art</option>
+                <option value="comics">Comics</option>
+                <option value="graphic novels">Graphic Novels</option>
+                <option value="drama">Drama</option>
+                <option value="classics">Classics</option>
+                <option value="short stories">Short Stories</option>
+                <option value="true crime">True Crime</option>
+                <option value="sports">Sports</option>
+                <option value="music">Music</option>
+                <option value="politics">Politics</option>
+                <option value="business">Business</option>
+                <option value="economics">Economics</option>
+                <option value="law">Law</option>
+                <option value="psychology">Psychology</option>
+                <option value="education">Education</option>
+                <option value="health">Health</option>
+                <option value="parenting">Parenting</option>
+                <option value="relationships">Relationships</option>
+                <option value="spirituality">Spirituality</option>
+            </select>
+    
+            <div id="search-results">
+                <p>Search for your favorite books</p>
+            </div>
+        </section>
+
+        <!-- Books Section -->
+        <section id="books">
+            <h2>All Books</h2>
+            <div class="books-wrapper">
+                <button class="scroll-button left" onclick="scrollLeft('books-container')">&lt;</button>
+                <div id="books-container" class="books-container">
+                    <!-- Books will be dynamically added here -->
+                </div>
+                <button class="scroll-button right" onclick="scrollRight('books-container')">&gt;</button>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section id="trending">
+            <h2>Trending Books</h2>
+            <div class="trending-books-wrapper">
+                <button class="scroll-button left" onclick="scrollLeft('trending-books-container')">&lt;</button>
+                <div class="trending-books-container" id="trending-books-container">
+                    <!-- Trending books will be dynamically added here -->
+                </div>
+                <button class="scroll-button right" onclick="scrollRight('trending-books-container')">&gt;</button>
+            </div>
+        </section>
+
+        <!-- Genres Section -->
+        <section id="genres">
+            <h2>Genres</h2>
+            <div id="genres-container">
+                <!-- Genres and their books will be dynamically added here -->
+            </div>
+        </section>
+    
+    </main>
+</body>
+</html>

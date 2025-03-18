@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script type="module" src="static/firebase-init.js" defer></script>
+    <script type="module" src="static/details.js" defer></script>
+</head>
+<body class="parallax">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Bookhive</div>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="/query">Query</a></li>
+                <li><a href="/upload-book">Upload Book</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <section id="book-details-section">
+            <h1>Book Details</h1>
+            <div id="book-details" data-book-id="{{ book_id }}"></div>
+            <div class="circular-progress" id="details-progress"></div>
+        </section>
+    </main>
+</body>
+</html>

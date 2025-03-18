@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Book</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script type="module" src="static/firebase-init.js" defer></script>
+    <script type="module" src="static/upload.js" defer></script>
+</head>
+<body class="parallax">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Bookhive</div>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="/query">Query</a></li>
+                <li><a href="/upload-book">Upload Book</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <section id="upload">
+            <h1>Upload Book</h1>
+            <form id="book-upload-form">
+                <label for="book-name">Book Name:</label>
+                <input type="text" id="book-name" required style="background-color: rgba(0, 0, 0, 0.5); color: white;"><br>
+                <label for="book-genre">Genre:</label>
+                <select id="book-genre" required style="background-color: rgba(0, 0, 0, 0.5); color: white;">
+                    <option value="">Select Genre</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="non-fiction">Non-Fiction</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="romance">Romance</option>
+                    <option value="science fiction">Science Fiction</option>
+                    <option value="thriller">Thriller</option>
+                    <option value="horror">Horror</option>
+                    <option value="biography">Biography</option>
+                    <option value="history">History</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="self-help">Self-Help</option>
+                    <option value="philosophy">Philosophy</option>
+                    <option value="religion">Religion</option>
+                    <option value="science">Science</option>
+                    <option value="travel">Travel</option>
+                    <option value="children">Children</option>
+                    <option value="young adult">Young Adult</option>
+                    <option value="cookbooks">Cookbooks</option>
+                    <option value="art">Art</option>
+                    <option value="comics">Comics</option>
+                    <option value="graphic novels">Graphic Novels</option>
+                    <option value="drama">Drama</option>
+                    <option value="classics">Classics</option>
+                    <option value="short stories">Short Stories</option>
+                    <option value="true crime">True Crime</option>
+                    <option value="sports">Sports</option>
+                    <option value="music">Music</option>
+                    <option value="politics">Politics</option>
+                    <option value="business">Business</option>
+                    <option value="economics">Economics</option>
+                    <option value="law">Law</option>
+                    <option value="psychology">Psychology</option>
+                    <option value="education">Education</option>
+                    <option value="health">Health</option>
+                    <option value="parenting">Parenting</option>
+                    <option value="relationships">Relationships</option>
+                    <option value="spirituality">Spirituality</option>
+                </select><br>
+                <label for="book-description">Description:</label>
+                <textarea id="book-description" required style="background-color: rgba(0, 0, 0, 0.5); color: white;"></textarea><br>
+                <label for="book-author">Author:</label>
+                <input type="text" id="book-author" required style="background-color: rgba(0, 0, 0, 0.5); color: white;"><br>
+                <label for="book-cover">Book Cover:</label>
+                <input type="file" id="book-cover" accept="image/*" required style="background-color: rgba(0, 0, 0, 0.5); color: white;"><br>
+                <label for="book-file">Book PDF:</label>
+                <input type="file" id="book-file" accept="application/pdf" required style="background-color: rgba(0, 0, 0, 0.5); color: white;"><br>
+                <button type="submit" style="background-color: #8B4513; color: white;">Upload</button>
+            </form>
+            <div class="circular-progress" id="upload-progress"></div>
+        </section>
+    </main>
+</body>
+</html>

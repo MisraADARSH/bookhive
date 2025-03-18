@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkEuLaRmpcFk7SUjshcr4j5I_YeCmi1o4",
+            authDomain: "bookhive-8134e.firebaseapp.com",
+            projectId: "bookhive-8134e",
+            storageBucket: "bookhive-8134e.firebasestorage.app",
+            messagingSenderId: "774988848702",
+            appId: "1:774988848702:web:57fdcdf1bda6198024bb6f",
+            measurementId: "G-TWVM5KBNCY"
+          };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Handle login
+        window.loginUser = () => {
+            const email = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Login successful
+                    const user = userCredential.user;
+                    const userId = user.uid;  // Get the user ID from Firebase
+                    alert("Login successful!");
+                    // Store the user ID in the session
+                    fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ user_id: userId })
+                    }).then(() => {
+                        window.location.href = "/home";
+                    });
+                })
+                .catch((error) => {
+                    // Handle login errors
+                    const errorMessage = error.message;
+                    alert(`Error: ${errorMessage}`);
+                });
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: url('{{ url_for("static", filename="shelf.jpg") }}') no-repeat fixed center;
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            /* White text for the entire page */
+        }
+
+        /* Login Container */
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Dark transparent background */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            /* Ensure all text defaults to white */
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: white;
+            /* White text for the heading */
+            margin-bottom: 30px;
+        }
+
+        .login-container label {
+            font-size: 16px;
+            color: white;
+            /* White text for labels */
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Slightly transparent input background */
+            color: white;
+            /* Input text color white */
+        }
+
+        .login-container input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            /* Placeholder text white but slightly transparent */
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            /* White text for the button */
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+
+        .login-container .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            /* White text for the signup link */
+        }
+
+        .login-container .signup-link a {
+            color: #4CAF50;
+            /* Green link color */
+            text-decoration: none;
+        }
+
+        .login-container .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form onsubmit="event.preventDefault(); loginUser();">
+            <label for="username">Email</label>
+            <input type="text" id="username" name="username" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/">Sign up</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

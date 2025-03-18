@@ -1,0 +1,753 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  color: white; /* Convert all text to white */
+}
+
+/* Parallax background for the entire page */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.parallax {
+  background-image: url('shelf.jpg');
+  height: 100vh;  /* Set the height to full viewport */
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: -1;  /* Ensure content overlays the background */
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures the content is spread evenly */
+}
+
+/* Logo */
+.sidebar .logo {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  margin-top: 20px;
+}
+
+/* Navigation Links */
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column; /* Stack the links vertically */
+  align-items: flex-start; /* Align items to the left */
+  margin-top: 30px; /* Space between logo and links */
+}
+
+.sidebar nav ul li {
+  margin: 10px 0; /* Adjust spacing between each link */
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  display: block; /* Make the whole link clickable */
+}
+
+.sidebar nav ul li a:hover {
+  background-color: #ff6347; /* Highlight background on hover */
+  color: white;
+}
+
+/* Main content */
+main {
+  margin-left: 270px; /* Adjust for sidebar width */
+  padding: 20px;
+  z-index: 5; /* Ensure content is above the parallax background */
+}
+
+/* Home Section */
+#home {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);  /* Light grey background */
+  padding: 50px 20px;  /* Reduce the padding to half */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;  /* Add more margin to increase length */
+}
+
+#home h1 {
+  font-size: 36px;
+  color: #ffffff;
+}
+
+#home p {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+/* Search Section */
+#search {
+  margin-top: 50px;
+  padding-bottom: 50px;  /* Add more padding to increase length */
+}
+
+#search h2 {
+  color: #ffffff; /* Set text color to white */
+  font-size: 24px; /* Optional: Adjust font size */
+  margin-bottom: 20px; /* Optional: Add spacing below the heading */
+}
+
+#search label {
+  color: #ffffff; /* Set text color to white */
+  font-size: 16px; /* Optional: Adjust font size */
+  margin-bottom: 10px; /* Optional: Add spacing below the label */
+  display: block; /* Optional: Ensure it stays on its own line */
+}
+
+#search input,
+#query textarea {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+
+#search input:focus,
+#query textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+  background-color: #ffffff;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#search-input,
+#book-name,
+#book-genre,
+#book-description,
+#book-author,
+#book-cover,
+#book-file,
+#genre-dropdown {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.5); /* Blackish transparent */
+    color: white;
+}
+
+#search-input::placeholder,
+#book-name::placeholder,
+#book-genre::placeholder,
+#book-description::placeholder,
+#book-author::placeholder,
+#book-cover::placeholder,
+#book-file::placeholder,
+#genre-dropdown::placeholder {
+    color: #ccc; /* Placeholder color */
+}
+
+#search-input:focus,
+#book-name:focus,
+#book-genre:focus,
+#book-description:focus,
+#book-author:focus,
+#book-cover:focus,
+#book-file:focus,
+#genre-dropdown:focus {
+    border-color: #4CAF50;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly darker on focus */
+}
+
+#search button,
+#book-upload-form button {
+    padding: 10px 25px;
+    background-color: #8B4513; /* Shade of brown */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#search button:hover,
+#book-upload-form button:hover {
+    background-color: #A0522D; /* Slightly lighter shade of brown */
+    transform: translateY(-2px);
+}
+
+#search-results {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #333;  /* Dark text color for visibility */
+  font-weight: bold;
+}
+
+/* Books Grid */
+#books,
+.genre-books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;  /* Add more spacing between books */
+  margin-top: 20px;
+}
+
+.book {
+  background-color: rgba(0, 0, 0, 0.6);  /*  background with transparency */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;  /* Add more padding to increase length */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Targeting the specific book in the search section */
+.book.pride-and-prejudice {
+  background-color: red; /* Change background to red */
+}
+
+.book:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Improved Book Image */
+.book-item img {
+  width: 100%;
+  max-width: 150px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.book-item:hover img {
+  transform: scale(1.05);
+}
+
+.book a {
+  color: white; /* Change link color to white */
+  text-decoration: none; /* Remove underline from links */
+  transition: color 0.3s ease; /* Smooth transition effect */
+}
+
+.book a:hover {
+  color: #ff6347; /* Change link color on hover to highlight */
+}
+
+.book p {
+  color: #ffffff; /* Set text color to white */
+  font-size: 14px; /* Optional: Adjust font size for readability */
+  margin-top: 10px; /* Optional: Add space between the name and description */
+  line-height: 1.5; /* Optional: Improve line spacing */
+}
+
+/* Book Detail Page */
+.book-detail {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+    color: white; /* Make all text white */
+}
+
+.book-cover {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.book-info {
+    max-width: 600px;
+}
+
+.book-info h2 {
+    margin-top: 0;
+    color: white; /* Make heading text white */
+}
+
+.book-info p {
+    margin: 5px 0;
+    color: white; /* Make paragraph text white */
+}
+
+.read-pdf-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.read-pdf-link:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+  background-color: #ff6347;
+  color: white;
+  text-align: center;
+  padding: 50px 0;  /* Add more padding to increase length */
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: 50px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+  }
+
+  .sidebar nav ul {
+      flex-direction: row; /* Change to horizontal layout on mobile */
+      justify-content: center;
+  }
+
+  .sidebar nav ul li {
+      margin: 0 15px;
+  }
+
+  .sidebar nav ul li a {
+      padding: 8px 12px;
+  }
+
+  header {
+      padding: 15px 10px;
+  }
+
+  #home,
+  #search,
+  #query {
+      padding: 30px;
+  }
+
+  #books {
+      grid-template-columns: 1fr;
+  }
+}
+
+/* Trending Section */
+#trending {
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.6);  /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#trending h2 {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.trending-books-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.trending-books-container {
+  display: flex;
+  overflow: hidden;
+  gap: 20px;
+  width: 80%; /* Adjust width as needed */
+}
+
+.trending-books-container .book {
+  flex: 0 0 33.33%; /* Show 3 books at a time */
+  background-color: transparent; /* Transparent background */
+  border-radius: 10px;
+  box-shadow: none; /* Remove box shadow */
+  padding: 0;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.trending-books-container .book img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.scroll-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.scroll-button.left {
+  left: -20px;
+}
+
+.scroll-button.right {
+  right: -20px;
+}
+
+/* Bestsellers Section */
+#bestsellers {
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.6);  /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#bestsellers h2 {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.bestsellers-books-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bestsellers-books-container {
+  display: flex;
+  overflow: hidden;
+  gap: 20px;
+  padding: 10px;
+  width: 500px; /* Shrink the container to an appropriate size */
+}
+
+.bestsellers-books-container .book {
+  flex: 0 0 auto;
+  width: 150px;
+  background-color: white;  /* Change background color to white */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.bestsellers-books-container .book img {
+  width: 100%; /* Ensure the book cover is displayed */
+  height: auto;
+  border-radius: 5px;
+}
+
+.bestsellers-books-container .book p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.bestsellers-books-container .book:hover {
+  transform: translateY(-5px);
+}
+
+/* Book Upload Section */
+#upload {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#upload h2 {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#upload label {
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+#upload input,
+#upload textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+#upload button {
+    padding: 10px 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#upload button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Circular Progress Indicator */
+.circular-progress {
+    display: none; /* Hidden by default */
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #007bff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Like Button */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Genres Section */
+#genres {
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.6);  /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#genres h2 {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+#genres-container {
+  display: flex;
+  flex-direction: column; /* Stack genres vertically */
+  gap: 50px; /* Space between genre sections */
+  width: 80%; /* Adjust width as needed */
+  margin: 0 auto;
+}
+
+.genre-section {
+  margin-bottom: 50px; /* Space between genre sections */
+}
+
+.genre-section h3 {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.genre-books-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.genre-books-container {
+  display: flex;
+  overflow: hidden;
+  gap: 20px;
+  width: 100%; /* Adjust width as needed */
+}
+
+.genre-books-container .book {
+  flex: 0 0 33.33%; /* Show 3 books at a time */
+  background-color: rgba(0, 0, 0, 0.6);  /* Change background color to match other sections */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.genre-books-container .book img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.genre-books-container .book p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.genre-books-container .book:hover {
+  transform: translateY(-5px);
+}
+
+.scroll-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.scroll-button.left {
+  left: -20px;
+}
+
+.scroll-button.right {
+  right: -20px;
+}
+
+/* Books Section */
+#books {
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(0, 0, 0, 0.6);  /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#books h2 {
+  font-size: 32px;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
+
+.books-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#books-container {
+  display: flex;
+  overflow: hidden;
+  gap: 20px;
+  width: 80%; /* Adjust width as needed */
+  margin: 0 auto;
+}
+
+#books-container .book {
+  flex: 0 0 33.33%; /* Show 3 books at a time */
+  background-color: rgba(0, 0, 0, 0.6);  /* Change background color to match other sections */
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+#books-container .book img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+#books-container .book p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+#books-container .book:hover {
+  transform: translateY(-5px);
+}
+
+.scroll-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.scroll-button.left {
+  left: -20px;
+}
+
+.scroll-button.right {
+  right: -20px;
+}
