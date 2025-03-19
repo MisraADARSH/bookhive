@@ -18,6 +18,28 @@
             text-align: center; /* Center text within the container */
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+            const booksContainer = document.getElementById('books-container');
+
+            function searchBooks() {
+                const query = searchInput.value.toLowerCase().trim();
+                const books = booksContainer.querySelectorAll('.book-item');
+
+                books.forEach(book => {
+                    const title = book.textContent.toLowerCase();
+                    if (title.includes(query)) {
+                        book.style.display = 'block'; // Show matching books
+                    } else {
+                        book.style.display = 'none'; // Hide non-matching books
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', searchBooks);
+        });
+    </script>
 </head>
 <body class="parallax">
 
@@ -106,7 +128,13 @@
             <div class="books-wrapper">
                 <button class="scroll-button left" onclick="scrollLeft('books-container')">&lt;</button>
                 <div id="books-container" class="books-container">
-                    <!-- Books will be dynamically added here -->
+                    <!-- Example book items -->
+                    <div class="book-item" data-title="The Great Gatsby">The Great Gatsby</div>
+                    <div class="book-item" data-title="To Kill a Mockingbird">To Kill a Mockingbird</div>
+                    <div class="book-item" data-title="1984">1984</div>
+                    <div class="book-item" data-title="Moby Dick">Moby Dick</div>
+                    <div class="book-item" data-title="Pride and Prejudice">Pride and Prejudice</div>
+                    <!-- Add more books dynamically -->
                 </div>
                 <button class="scroll-button right" onclick="scrollRight('books-container')">&gt;</button>
             </div>
